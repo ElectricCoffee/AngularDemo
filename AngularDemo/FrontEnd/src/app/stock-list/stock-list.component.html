@@ -4,9 +4,14 @@
   </thead>
   <tbody>
   @for (datum of tableData; track datum.itemId) {
-    <tr><td>{{datum.itemName}}</td><td>{{datum.amount}}</td><td>{{datum.itemId}}</td>{{datum.location}}</tr>
+    <tr>
+      <td>{{datum.itemName}}</td>
+      <td>{{datum.amount}}</td>
+      <td>{{datum.itemId.substring(0, 8)}}</td>
+      <td>{{datum.location}}</td>
+      <td><button>edit</button></td>
+      <td><button>delete</button></td>
+    </tr>
   }
   </tbody>
 </table>
-
-<button (click)="getItems()">Click me!</button>

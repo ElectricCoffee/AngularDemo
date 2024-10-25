@@ -1,10 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
-type TableDatum = {
-  amount: number;
-  itemId: string;
-  location: string;
-}
+import {StockDataService, StockDatum} from '../services/stock-data.service';
 
 @Component({
   selector: 'app-stock-list',
@@ -13,15 +8,28 @@ type TableDatum = {
 })
 
 export class StockListComponent implements OnInit {
-  tableData: TableDatum[] = []
+  tableData: StockDatum[] = []
+
+  constructor(private stockData: StockDataService) {
+  }
 
   ngOnInit(): void {
-    // TODO: fetch list from server
+    this.getItems();
     console.log('initialised')
   }
 
-  createItem(amount: number, itemId: string, location: string) {
-    this.tableData.push({amount, itemId, location});
+  getItems() {
+    const response = this.stockData.getStockData()
+    response.subscribe({
+      next: data => {
+        this.tableData = data;
+      },
+      error: error => console.log(error)
+    })
+  }
+
+  createItem(itemName: string, amount: number, itemId: string, location: string) {
+    this.tableData.push({itemName, amount, itemId, location});
     // TODO: send request to server that the item is being created
   }
 

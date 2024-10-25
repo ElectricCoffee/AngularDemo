@@ -1,10 +1,12 @@
 <table>
   <thead>
-  <tr><th>Mængde</th><th>Varenummer</th><th>Lokation</th></tr>
+  <tr><th>Navn</th><th>Mængde</th><th>Varenummer</th><th>Lokation</th></tr>
   </thead>
   <tbody>
   @for (datum of tableData; track datum.itemId) {
-    <tr><td>{{datum.amount}}</td><td>{{datum.itemId}}</td>{{datum.location}}</tr>
+    <tr><td>{{datum.itemName}}</td><td>{{datum.amount}}</td><td>{{datum.itemId}}</td>{{datum.location}}</tr>
   }
   </tbody>
 </table>
+
+<button (click)="getItems()">Click me!</button>

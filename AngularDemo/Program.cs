@@ -1,9 +1,19 @@
+using AngularDemo.models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -15,6 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin");
 
 var summaries = new[]
 {
@@ -35,6 +46,17 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+
+app.MapGet("/stockdata", () =>
+{
+    // demo data
+    return new List<StockDatum>
+    {
+        new() { ItemName = "Plumbus", Amount = 1, Location = "Aalborg", ItemId = Guid.NewGuid() },
+        new() { ItemName = "Baterang", Amount = 1, Location = "Svenstrup", ItemId = Guid.NewGuid() },
+        new() { ItemName = "Uranium", Amount = 1, Location = "Odense", ItemId = Guid.NewGuid() }
+    };
+}).WithName("GetStockData").WithOpenApi();
 
 app.Run();
 

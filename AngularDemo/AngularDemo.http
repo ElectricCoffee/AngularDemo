@@ -4,3 +4,21 @@ GET {{AngularDemo_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{AngularDemo_HostAddress}}/stockdata/
+Accept: application/json
+
+###
+
+PUT {{AngularDemo_HostAddress}}/stockdata/{{Id}}
+Accept: application/json
+
+###
+
+POST {{AngularDemo_HostAddress}}/stockdata/
+Accept: application/json
+
+###
+
+DELETE {{AngularDemo_HostAddress}}/stockdata/{{Id}}
+Accept: application/json

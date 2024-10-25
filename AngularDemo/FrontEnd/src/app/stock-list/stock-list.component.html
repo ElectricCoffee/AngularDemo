@@ -1,0 +1,10 @@
+<table>
+  <thead>
+  <tr><th>Mængde</th><th>Varenummer</th><th>Lokation</th></tr>
+  </thead>
+  <tbody>
+  @for (datum of tableData; track datum.itemId) {
+    <tr><td>{{datum.amount}}</td><td>{{datum.itemId}}</td>{{datum.location}}</tr>
+  }
+  </tbody>
+</table>

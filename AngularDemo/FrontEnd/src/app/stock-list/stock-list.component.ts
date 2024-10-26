@@ -15,6 +15,7 @@ import {StockDataService, StockDatum} from '../services/stock-data.service';
 })
 export class StockListComponent implements OnInit {
   tableData: StockDatum[] = [];
+  displayedColumns: string[] = ['itemName', 'amount', 'itemId', 'location', 'editButton', 'deleteButton'];
 
   constructor(private stockData: StockDataService) {}
 

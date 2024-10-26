@@ -1,18 +1,39 @@
-<table>
-  <thead>
-  <tr><th>Navn</th><th>Mængde</th><th>Varenummer</th><th>Lokation</th></tr>
-  </thead>
-  <tbody>
-  @for (datum of tableData; track datum.itemId) {
-    <tr>
-      <td>{{datum.itemName}}</td>
-      <td>{{datum.amount}}</td>
-      <td>{{datum.itemId.substring(0, 8)}}</td>
-      <td>{{datum.location}}</td>
-      <td><button mat-button color="primary">Redigér</button></td>
-      <td><button mat-button color="warn">Slet</button></td>
-    </tr>
-  }
-  <tr><td><button mat-raised-button color="primary">Tilføj Ny</button></td></tr>
-  </tbody>
+<table mat-table [dataSource]="tableData">
+  <ng-container matColumnDef="itemName">
+    <th mat-header-cell *matHeaderCellDef>Navn</th>
+    <td mat-cell *matCellDef="let element">{{element.itemName}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Mængde</th>
+    <td mat-cell *matCellDef="let element">{{element.amount}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="itemId">
+    <th mat-header-cell *matHeaderCellDef>Varenummer</th>
+    <td mat-cell *matCellDef="let element">{{element.itemId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef>Lokation</th>
+    <td mat-cell *matCellDef="let element">{{element.location}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="editButton">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="primary">Redigér</button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="deleteButton">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="warn">Slet</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+<button mat-raised-button color="primary">Tilføj Ny</button>

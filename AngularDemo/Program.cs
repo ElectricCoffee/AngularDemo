@@ -27,40 +27,58 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin");
 
-var summaries = new[]
+// this is our proxy for a database.
+// Naturally it won't persist between runs, but I feel like setting up an entire database server is a bit beyond the scope of this project.
+var demoData = new List<StockDatum>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    new("Plumbus","Aalborg"),
+    new("Baterang","Svenstrup"),
+    new("Uranium", "Odense")
 };
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+app.MapGet("/stockdata", () => demoData).WithName("GetStockData").WithOpenApi();
 
-app.MapGet("/stockdata", () =>
+// add a new item to the list. If the ID already exists, replace it instead.
+app.MapPost("/stockdata", (StockDatum datum) =>
 {
-    // demo data
-    return new List<StockDatum>
+    var i = demoData.FindIndex(x => x.ItemId == datum.ItemId);
+    
+    if (i != -1)
     {
-        new() { ItemName = "Plumbus", Amount = 1, Location = "Aalborg", ItemId = Guid.NewGuid() },
-        new() { ItemName = "Baterang", Amount = 1, Location = "Svenstrup", ItemId = Guid.NewGuid() },
-        new() { ItemName = "Uranium", Amount = 1, Location = "Odense", ItemId = Guid.NewGuid() }
-    };
-}).WithName("GetStockData").WithOpenApi();
+        demoData[i] = datum;
+    }
+    else
+    {
+        demoData.Add(datum);
+    }
+    return Results.Ok(datum);
+}).WithName("PostStockData").WithOpenApi();
+
+app.MapPut("/stockdata/{id}", (string id, StockDatum datum) =>
+{
+    var i = demoData.FindIndex(x => x.ItemId.Equals(id));
+
+    if (i == -1)
+    {
+        return Results.NotFound();
+    }
+    
+    demoData[i] = datum;
+    return Results.Ok(datum);
+}).WithName("PutStockData").WithOpenApi();
+
+app.MapDelete("/stockdata/{id}", (string id) =>
+{
+    var i = demoData.FindIndex(x => x.ItemId.Equals(id));
+
+    if (i == -1)
+    {
+        return Results.NotFound();
+    }
+    var datum = demoData[i];
+    demoData.RemoveAt(i);
+    
+    return Results.Ok(datum); // return the item that was just deleted, just in case.
+}).WithName("DeleteStockData").WithOpenApi();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

@@ -4,10 +4,6 @@ namespace AngularDemo.models;
 
 public class StockDatum : IStockDatum
 {
-    public StockDatum()
-    {
-    }
-
     [JsonConstructor]
     public StockDatum(string itemName, string location, int amount = 1, string? itemId = null)
     {

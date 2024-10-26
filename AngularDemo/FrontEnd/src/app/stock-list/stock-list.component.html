@@ -1,3 +1,7 @@
+<mat-form-field class="filterField">
+  <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+</mat-form-field>
+
 <table mat-table [dataSource]="tableData" matSort>
   <ng-container matColumnDef="itemName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Navn</th>

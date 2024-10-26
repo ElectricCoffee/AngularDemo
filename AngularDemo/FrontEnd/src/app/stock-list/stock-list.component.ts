@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StockDataService, StockDatum} from '../services/stock-data.service';
 import {UpdateDialogComponent} from '../update-dialog/update-dialog.component';
 import {AddDialogComponent} from '../add-dialog/add-dialog.component';
@@ -18,7 +18,7 @@ import {MatSort} from '@angular/material/sort';
 @Component({
   selector: 'app-stock-list',
   templateUrl: './stock-list.component.html',
-  styles: [``],
+  styles: [`.filterField {width: 100%;}`],
 })
 export class StockListComponent implements OnInit, AfterViewInit {
   tableData = new MatTableDataSource<StockDatum>([]);
@@ -34,6 +34,11 @@ export class StockListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.tableData.sort = this.sort;
+  }
+
+  applyFilter(event: KeyboardEvent): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.tableData.filter = value.trim().toLowerCase();
   }
 
   getItems() {

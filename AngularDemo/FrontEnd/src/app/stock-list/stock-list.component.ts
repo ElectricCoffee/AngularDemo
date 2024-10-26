@@ -42,6 +42,9 @@ export class StockListComponent implements OnInit, AfterViewInit {
     this.tableData.filter = value.trim().toLowerCase();
   }
 
+  /**
+   * Gets the items off the server and populates the table with them.
+   */
   getItems() {
     const response = this.stockData.getStockData()
     response.subscribe({
@@ -52,10 +55,19 @@ export class StockListComponent implements OnInit, AfterViewInit {
     })
   }
 
+  /**
+   * Utility function to help find the index of an item in the array.
+   * @param id
+   */
   findIndex(id: string): number {
     return this.tableData.data.findIndex(e => e.itemId === id);
   }
 
+  /**
+   * Adds a new item to the table before sending it off to the server.
+   * If the item already exists in the table, it's simply updated instead.
+   * @param item The item to be added.
+   */
   createItem(item: StockDatum) {
     const i = this.findIndex(item.itemId);
 
@@ -71,6 +83,10 @@ export class StockListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Updates an item in the table before sending off the query to the server.
+   * @param item the item to be updated.
+   */
   updateItem(item: StockDatum) {
     const i = this.findIndex(item.itemId);
 
@@ -84,6 +100,10 @@ export class StockListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Deletes an item off the table before deleting it on the server.
+   * @param id The ID of the item to be deleted.
+   */
   deleteItem(id: string) {
     const i = this.findIndex(id);
     this.tableData.data = removeAtIndex(this.tableData.data, i);

@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {StockDatum} from '../types/stock-datum';
 
+/**
+ * Utility service for dealing with the http requests to the back-end
+ */
 @Injectable({
   providedIn: "root",
 })

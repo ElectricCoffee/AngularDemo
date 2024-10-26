@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {StockDataService, StockDatum} from '../services/stock-data.service';
 import {UpdateDialogComponent} from '../update-dialog/update-dialog.component';
 import {AddDialogComponent} from '../add-dialog/add-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {removeAtIndex, replaceAtIndex} from '../util/arrayUtils';
 
 // Note to the reviewer:
 // this entire component runs off of the idea of "eventual consistency"
@@ -41,22 +42,37 @@ export class StockListComponent implements OnInit {
     return this.tableData.findIndex(e => e.itemId === id);
   }
 
-  createItem(itemName: string, amount: number, itemId: string, location: string) {
-    const item = {itemName, amount, itemId, location};
-    const i = this.findIndex(itemId);
+  createItem(item: StockDatum) {
+    const i = this.findIndex(item.itemId);
 
     if (i !== -1) {
-      this.tableData[i] = item;
+      this.tableData = replaceAtIndex(this.tableData, i, item);
     } else {
-      this.tableData.push(item);
+      this.tableData = [...this.tableData, item];
     }
 
-    this.stockData.createItem(item);
+    this.stockData.createItem(item).subscribe({
+      next: data => console.log('Created', data),
+      error: e => console.log(e),
+    });
+  }
+
+  updateItem(item: StockDatum) {
+    const i = this.findIndex(item.itemId);
+
+    if (i !== -1) {
+      this.tableData = replaceAtIndex(this.tableData, i, item);
+    }
+
+    this.stockData.updateItem(item).subscribe({
+      next: data => console.log('Updated', data),
+      error: e => console.log(e),
+    });
   }
 
   deleteItem(id: string) {
     const i = this.findIndex(id);
-    delete this.tableData[i];
+    this.tableData = removeAtIndex(this.tableData, i);
     this.stockData.deleteItem(id);
   }
 
@@ -68,7 +84,9 @@ export class StockListComponent implements OnInit {
 
     ref.afterClosed().subscribe(result => {
       console.log(result);
-      // this.createItem(result);
+      if(result) {
+        this.createItem(result);
+      }
     })
   }
   openUpdateDialog(input: StockDatum) {
@@ -79,6 +97,9 @@ export class StockListComponent implements OnInit {
 
     ref.afterClosed().subscribe(result => {
       console.log(result)
+      if (result) {
+        this.updateItem({...input, ...result});
+      }
     })
   }
 }

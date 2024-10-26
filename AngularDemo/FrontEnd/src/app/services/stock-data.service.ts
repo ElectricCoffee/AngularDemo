@@ -22,11 +22,12 @@ export class StockDataService {
   }
 
   createItem(body: StockDatum): Observable<any> {
-    return this.http.post(this.apiUrl, body);
+    console.log('creating item', body)
+    return this.http.post(this.apiUrl, body).pipe();
   }
 
-  updateItem(id: string, body: StockDatum): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, body);
+  updateItem(body: StockDatum): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${body.itemId}`, body);
   }
 
   deleteItem(id: string): Observable<any> {

@@ -5,15 +5,18 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {AddDialogComponent} from './add-dialog/add-dialog.component';
 import {UpdateDialogComponent} from './update-dialog/update-dialog.component';
+import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   imports: [
     MatButtonModule,
     MatDialogModule,
     MatTableModule,
+    MatSortModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
@@ -25,6 +28,7 @@ import {FormsModule} from '@angular/forms';
     StockListComponent,
     AddDialogComponent,
     UpdateDialogComponent,
+    DeleteDialogComponent,
   ]
 })
 export class AppModule {}

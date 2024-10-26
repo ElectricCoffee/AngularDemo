@@ -1,0 +1,5 @@
+<h1 mat-dialog-title>Vil du slette {{data.name}}?</h1>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="data">Ja</button>
+  <button mat-raised-button (click)="closeDialog()">Nej</button>
+</div>

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Tilføj Produkt</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <span>Navn</span><input matInput [(ngModel)]="data.itemName">
+  </mat-form-field>
+  <mat-form-field>
+    <span>Antal</span><input matInput [(ngModel)]="data.amount" type="number">
+  </mat-form-field>
+  <mat-form-field>
+    <span>Varenummer</span><input matInput [(ngModel)]="data.itemId">
+  </mat-form-field>
+  <mat-form-field>
+    <span>Lokation</span><input matInput [(ngModel)]="data.location">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="data">Ok</button>
+  <button mat-raised-button (click)="closeDialog()">Annullér</button>
+</div>

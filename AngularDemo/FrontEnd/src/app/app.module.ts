@@ -3,18 +3,28 @@ import {StockListComponent} from './stock-list/stock-list.component';
 import {MatButtonModule} from '@angular/material/button'
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
+import {AddDialogComponent} from './add-dialog/add-dialog.component';
+import {UpdateDialogComponent} from './update-dialog/update-dialog.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     MatButtonModule,
     MatDialogModule,
     MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
   ],
   exports: [
     StockListComponent
   ],
   declarations: [
-    StockListComponent
+    StockListComponent,
+    AddDialogComponent,
+    UpdateDialogComponent,
   ]
 })
 export class AppModule {}

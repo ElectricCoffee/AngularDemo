@@ -1,16 +1,21 @@
 <h1 mat-dialog-title>Redigér {{data.itemId}}</h1>
-<div mat-dialog-content>
-  <mat-form-field>
-    <span>Navn</span><input matInput [(ngModel)]="data.itemName">
-  </mat-form-field>
-  <mat-form-field>
-    <span>Antal</span><input matInput [(ngModel)]="data.amount">
-  </mat-form-field>
-  <mat-form-field>
-    <span>Lokation</span><input matInput [(ngModel)]="data.location">
-  </mat-form-field>
-</div>
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field floatLabel="auto">
+      <mat-label>Navn</mat-label>
+      <input matInput formControlName="itemName" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Antal</mat-label>
+      <input matInput formControlName="amount" type="number" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Lokation</mat-label>
+      <input matInput formControlName="location" required>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" [mat-dialog-close]="data">Ok</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" type="submit" [disabled]="form.invalid">Ok</button>
   <button mat-raised-button (click)="closeDialog()">Annullér</button>
 </div>

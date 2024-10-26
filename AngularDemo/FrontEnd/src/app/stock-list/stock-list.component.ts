@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {StockDataService, StockDatum} from '../services/stock-data.service';
+import {StockDataService} from '../services/stock-data.service';
 import {UpdateDialogComponent} from '../update-dialog/update-dialog.component';
 import {AddDialogComponent} from '../add-dialog/add-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import {removeAtIndex, replaceAtIndex} from '../util/arrayUtils';
 import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
+import {StockDatum} from '../types/stock-datum';
 
 // Note to the reviewer:
 // this entire component runs off of the idea of "eventual consistency"

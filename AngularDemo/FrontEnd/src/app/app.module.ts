@@ -8,7 +8,7 @@ import {UpdateDialogComponent} from './update-dialog/update-dialog.component';
 import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
@@ -20,6 +20,7 @@ import {MatSortModule} from '@angular/material/sort';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     StockListComponent

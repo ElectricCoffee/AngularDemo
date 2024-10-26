@@ -20,4 +20,16 @@ export class StockDataService {
   getStockData(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  createItem(body: StockDatum): Observable<any> {
+    return this.http.post(this.apiUrl, body);
+  }
+
+  updateItem(id: string, body: StockDatum): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, body);
+  }
+
+  deleteItem(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
